@@ -1,27 +1,31 @@
 package com.example.demo.Controller;
 
-import com.example.demo.model.Task; // Assuming Task model is created
-import com.example.demo.model.Category; // Assuming Category model is created
-import com.example.demo.model.Client;
-import com.example.demo.model.CorporateCase;
-import com.example.demo.model.Lawyer;
-import com.example.demo.model.Paralegal;
-import com.example.demo.dao.TaskDAO; // DAO for tasks
-import com.example.demo.dao.ClientDAO; // DAO for clients
-import com.example.demo.dao.LawyerDAO; // DAO for lawyers
-import com.example.demo.dao.CorporateCaseDAO; // DAO for corporate cases
-import com.example.demo.dao.CivilCaseDAO;
-import com.example.demo.dao.CriminalCaseDAO;
-import com.example.demo.dao.MatrimonialCaseDAO;
-import com.example.demo.dao.ParalegalDAO;
-import com.example.demo.dao.CategoryDAO; // DAO for categories
+import java.util.ArrayList; // Assuming Task model is created
+import java.util.List; // Assuming Category model is created
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute; // DAO for tasks
+import org.springframework.web.bind.annotation.PathVariable; // DAO for clients
+import org.springframework.web.bind.annotation.PostMapping; // DAO for lawyers
+import org.springframework.web.bind.annotation.RequestMapping; // DAO for corporate cases
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.ArrayList;
+import com.example.demo.dao.CategoryDAO;
+import com.example.demo.dao.CivilCaseDAO;
+import com.example.demo.dao.ClientDAO;
+import com.example.demo.dao.CorporateCaseDAO; // DAO for categories
+import com.example.demo.dao.CriminalCaseDAO;
+import com.example.demo.dao.LawyerDAO;
+import com.example.demo.dao.MatrimonialCaseDAO;
+import com.example.demo.dao.ParalegalDAO;
+import com.example.demo.dao.TaskDAO;
+import com.example.demo.model.Category;
+import com.example.demo.model.Lawyer;
+import com.example.demo.model.Paralegal;
+import com.example.demo.model.Task;
 
 @Controller
 @RequestMapping("/task")

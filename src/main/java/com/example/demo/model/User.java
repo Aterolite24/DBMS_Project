@@ -1,62 +1,18 @@
 package com.example.demo.model;
 
-// import java.sql.Date;
-
-// import jakarta.persistence.Entity;
-// import jakarta.persistence.GeneratedValue;
-// import jakarta.persistence.GenerationType;
-// import jakarta.persistence.Id;
-// import jakarta.persistence.Table;
-// import lombok.Data;
-
-// @Data
-// // @Entity
-// @Table(name="User")
-// public class User {
-
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.AUTO)
-//     private Integer id;
-
-
-//     private String name;
-//     private String email;
-//     private String password;
-//     private String gender;
-//     private String profession;
-//     private Date birthday;
-//     public void setPhoneNumber1(Object phoneNumber) {
-//     }
-//     public void setPhoneNumber2(Object phoneNumber) {
-//     }
-// }
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
-
-@Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
+
+	private Long id; // Changed to Long to match the original User model
 	private String email;
 	private String password;
 	private String role;
 	private String fullname;
-	
+
 	public User() {
-		super();
+		// Default constructor
 	}
 
 	public User(String email, String password, String role, String fullname) {
-		
 		this.email = email;
 		this.password = password;
 		this.role = role;
@@ -102,14 +58,4 @@ public class User {
 	public void setFullname(String fullname) {
 		this.fullname = fullname;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrimonial Case Registration</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .required::after {
+            content: " *";
+            color: red;
+        }
+        .text-danger {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container mt-5">
+        <h2>Matrimonial Case Registration</h2>
+        <form action="/matrimonialCase/register" method="post">
+            <div class="form-group">
+                <label for="caseDesc">Case Description</label>
+                <textarea class="form-control" id="caseDesc" name="caseDesc" placeholder="Enter case description" rows="2"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="startDate" class="required">Start Date</label>
+                    <input type="text" class="form-control" id="startDate" name="startDate" placeholder="dd-mm-yyyy" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="endDate">End Date</label>
+                    <input type="text" class="form-control" id="endDate" name="endDate" placeholder="dd-mm-yyyy" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="clientID" class="required">Client ID</label>
+                    <input type="number" class="form-control" id="clientID" name="clientID" placeholder="Enter Client ID" required>
+                    <div id="clientWarning" class="alert alert-danger alert-dismissible fade show mt-2" style="display: none;" role="alert">
+                        Client does not exist. Please enter a valid Client ID.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="marriedStatus">Married Status</label>
+                    <input type="text" class="form-control" id="marriedStatus" name="marriedStatus" placeholder="Enter married status">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="disputeType">Dispute Type</label>
+                    <input type="text" class="form-control" id="disputeType" name="disputeType" placeholder="Enter dispute type">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="alimonyStatus">Alimony Status</label>
+                    <input type="text" class="form-control" id="alimonyStatus" name="alimonyStatus" placeholder="Enter alimony status">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="children">Number of Children</label>
+                    <input type="number" class="form-control" id="children" name="children" placeholder="Enter number of children" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="custodyDetail">Custody Detail</label>
+                    <input type="text" class="form-control" id="custodyDetail" name="custodyDetail" placeholder="Enter custody details">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="marriageDate">Marriage Date</label>
+                    <input type="text" class="form-control" id="marriageDate" name="marriageDate" placeholder="dd-mm-yyyy" required>
+                </div>
+            </div>
+        
+            <button type="submit" class="btn btn-primary">Register</button>
+            <a href="/viewCurrentCases" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

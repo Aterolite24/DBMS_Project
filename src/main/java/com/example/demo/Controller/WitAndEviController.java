@@ -1,8 +1,19 @@
 package com.example.demo.Controller;
 
-import com.example.demo.model.CaseWit;
-import com.example.demo.model.Category;
-import com.example.demo.model.WitAndEvi;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.example.demo.dao.CaseWitDAO;
 import com.example.demo.dao.CategoryDAO;
 import com.example.demo.dao.CivilCaseDAO;
@@ -13,14 +24,9 @@ import com.example.demo.dao.LawyerDAO;
 import com.example.demo.dao.MatrimonialCaseDAO;
 import com.example.demo.dao.ParalegalDAO;
 import com.example.demo.dao.WitAndEviDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.demo.model.CaseWit;
+import com.example.demo.model.Category;
+import com.example.demo.model.WitAndEvi;
 
 @Controller
 @RequestMapping("/witnessEvi")
@@ -53,14 +59,14 @@ public class WitAndEviController {
     private CaseWitDAO caseWitDAO;
 
     // Display form
-    @GetMapping("/form")
+    @GetMapping("/form") // works
     public String showWitnessForm(Model model) {
         model.addAttribute("witnessEvi", new WitAndEvi());
         return "witandeviform";  // The Thymeleaf template (HTML page) name
     }
 
     // Save new witness and evidence data
-    @PostMapping("/save")
+    @PostMapping("/save") //works
     public String saveWitness(@jakarta.validation.Valid @ModelAttribute("witnessEvi") WitAndEvi witAndEvi, 
                               BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -76,7 +82,7 @@ public class WitAndEviController {
     }
 
     // List all witness and evidence records
-    @GetMapping("/list")
+    @GetMapping("/list") // works
     public String listWitnessEvidence(Model model) {
         List<WitAndEvi> witnessEvidenceList = witAndEviDAO.getAllWitAndEvi();
         model.addAttribute("witnessEvidenceList", witnessEvidenceList);
@@ -90,7 +96,7 @@ public class WitAndEviController {
     
 
     // Edit a specific witness and evidence record
-    @GetMapping("/edit/{eviID}")
+    @GetMapping("/edit/{eviID}") //works
     public String editWitness(@PathVariable("eviID") int eviID, Model model) {
         WitAndEvi witnessEvi = witAndEviDAO.getWitAndEviById(eviID);
         if (witnessEvi != null) {
@@ -102,13 +108,13 @@ public class WitAndEviController {
     }
 
     // Delete a specific witness and evidence record
-    @GetMapping("/delete/{eviID}")
+    @GetMapping("/delete/{eviID}") // works
     public String deleteWitness(@PathVariable("eviID") int eviID) {
         witAndEviDAO.deleteWitAndEvi(eviID);
         return "redirect:/witnessEvi/list";  // Redirect to list after deletion
     }
 
-    @GetMapping("/categories")
+    @GetMapping("/categories") 
     public String showCategories(@RequestParam("eviID") int eviID, Model model) {
         List<Category> categories = categoryDAO.listCategories();
         model.addAttribute("categories", categories);
@@ -119,50 +125,40 @@ public class WitAndEviController {
     
     // Handle the category selection
     @PostMapping("/selCategory")
-    public String selectCategory(
-            @RequestParam("caseType") String caseType, 
-            @RequestParam("eviID") int eviID, // New parameter for witness ID
-            Model model) {
-        // Fetch the CatID from the database using the caseType
-        int catID = categoryDAO.getCatIdByCaseType(caseType);
-        
-        // Create a new task and set the category ID
-        CaseWit wit = new CaseWit();
-        wit.setCatID(catID); // Set the catID
-        
-        // Fetch case IDs based on catID
-        List<Integer> caseIds = new ArrayList<>();
-        switch (catID) {
-            case 1: // Corporate Case
-                caseIds = corporateCaseDAO.getCorporateCaseIds();
-                break;
-            case 2: // Matrimonial Case
-                caseIds = matrimonialCaseDAO.getMatrimonialCaseIds();
-                break;
-            case 3: // Civil Case
-                caseIds = civilCaseDAO.getCivilCaseIds();
-                break;
-            case 4: // Criminal Case
-                caseIds = criminalCaseDAO.getCriminalCaseIds();
-                break;
-            default:
-                // Handle default case or invalid catID
-                caseIds = new ArrayList<>();
-                break;
-        }
+    public String selCategory(@RequestParam("caseType") String caseType, @RequestParam("eviID") int eviID, Model model) {
     
-        // Add attributes to the model
-        model.addAttribute("catID", catID);
-        model.addAttribute("caseIds", caseIds);
-        model.addAttribute("wit", wit); // Add the task object for the form
-        model.addAttribute("eviID", eviID); // Add the witness ID to the model
+    // Fetch the CatID from the database using the caseType
+    int catID = categoryDAO.getCatIdByCaseType(caseType);
     
-        // Return the task form view
-        return "choosecase"; // Name of the Thymeleaf template for displaying task form
+    // Fetch case IDs based on catID
+    List<Integer> caseIds = new ArrayList<>();
+    switch (catID) {
+        case 1:
+            caseIds = corporateCaseDAO.getCorporateCaseIds();
+            break;
+        case 2:
+            caseIds = matrimonialCaseDAO.getMatrimonialCaseIds();
+            break;
+        case 3:
+            caseIds = civilCaseDAO.getCivilCaseIds();
+            break;
+        case 4:
+            caseIds = criminalCaseDAO.getCriminalCaseIds();
+            break;
+        default:
+            caseIds = new ArrayList<>();
+            break;
     }
     
+    // Add attributes to the model
+    model.addAttribute("catID", catID);
+    model.addAttribute("caseIds", caseIds);
+    model.addAttribute("eviID", eviID);
+    
+    return "chooscase"; // This is the Thymeleaf view name
+}   
     @PostMapping("/assignCase")
-public String assignCase(
+        public String assignCase(
         @RequestParam("eviID") int eviID, 
         @RequestParam("catID") int catID, 
         @RequestParam("caseID") int caseID, 

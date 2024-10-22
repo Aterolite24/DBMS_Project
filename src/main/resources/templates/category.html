@@ -6,9 +6,14 @@
 <body>
 <h1>Select a Category</h1>
 <form action="#" th:action="@{/appointment/selectCategory}" method="post">
-    <!-- Dropdown with caseType as the value instead of catID -->
-    <select name="caseType">
-        <option th:each="category : ${categories}" th:value="${category.caseType}" th:text="${category.caseType}"></option>
+    
+    <label for="caseTypeSelect">Select a Category:</label>
+    <select id="caseTypeSelect" name="caseType" required>
+        <option value="" disabled selected>Select a category</option>
+        <option value="1">Corporate Case</option>
+        <option value="2">Matrimonial Case</option>
+        <option value="3">Civil Case</option>
+        <option value="4">Criminal Case</option>
     </select>
     <button type="submit">Submit</button>
 </form>

@@ -6,20 +6,14 @@
 <body>
 <h1>Choose a Case for Witness</h1>
 
-<form action="#" th:action="@{/witnessEvi/assignCase}" method="post">
-    <!-- Hidden input to pass the witness ID -->
+<form th:action="@{/witnessEvi/assignCase}" method="post">
     <input type="hidden" name="eviID" th:value="${eviID}" />
-
-    <!-- Hidden input to pass the category ID -->
     <input type="hidden" name="catID" th:value="${catID}" />
-
-    <!-- Dropdown for cases -->
     <label for="caseSelect">Select a Case:</label>
     <select id="caseSelect" name="caseID" required>
         <option value="" disabled selected>Select a case</option>
         <option th:each="caseId : ${caseIds}" th:value="${caseId}" th:text="${caseId}"></option>
     </select>
-
     <button type="submit">Assign Case</button>
 </form>
 

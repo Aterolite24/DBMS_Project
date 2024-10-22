@@ -13,7 +13,6 @@
         <select th:field="*{caseId}" required>
             <option th:each="caseId : ${caseIds}" th:value="${caseId}" th:text="${caseId}"></option>
         </select>
-
         <!-- Hidden input for TaskID, if applicable -->
         <input type="hidden" th:field="*{catId}" />
 
