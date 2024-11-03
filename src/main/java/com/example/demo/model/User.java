@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+<<<<<<< HEAD
 // import java.sql.Date;
 
 // import jakarta.persistence.Entity;
@@ -104,6 +105,8 @@ package com.example.demo.model;
 // 	}
 // package com.example.demo.model;
 
+=======
+>>>>>>> 373e9354fe26c33bbebf97387a080b62ba55e741
 public class User {
 
 	private Long id; // Changed to Long to match the original User model
@@ -162,6 +165,7 @@ public class User {
 	public void setFullname(String fullname) {
 		this.fullname = fullname;
 	}
+<<<<<<< HEAD
 }
 	
 	
@@ -178,3 +182,6 @@ public class User {
 
 
 
+=======
+}
+>>>>>>> 373e9354fe26c33bbebf97387a080b62ba55e741

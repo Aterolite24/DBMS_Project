@@ -116,6 +116,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return count != null && count > 0;
 	}
 
+<<<<<<< HEAD
 	// public User findByEmail(String email) {
 	// 	String sql = "SELECT * FROM users WHERE email = ?";
 	// 	return jdbcTemplate.queryForObject(sql, new Object[]{email}, (rs, rowNum) ->
@@ -146,4 +147,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 	
 	
+=======
+	public User findByEmail(String email) {
+		String sql = "SELECT * FROM users WHERE email = ?";
+		return jdbcTemplate.queryForObject(sql, new Object[]{email}, (rs, rowNum) ->
+				new User(
+						rs.getString("email"),
+						rs.getString("password"),
+						rs.getString("role"),
+						rs.getString("fullname")
+				)
+		);
+	}
+>>>>>>> 373e9354fe26c33bbebf97387a080b62ba55e741
 }

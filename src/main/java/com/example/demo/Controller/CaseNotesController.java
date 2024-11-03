@@ -39,11 +39,11 @@ public class CaseNotesController {
     }
 
     @PostMapping("/create")
-    public String createCaseNote(@RequestParam int caseID, 
-                                  @RequestParam int catID, 
-                                  @RequestParam String noteText, 
-                                  @RequestParam String relevance,
-                                  Principal principal) {
+    public String createCaseNote(@RequestParam int caseID,
+                                 @RequestParam int catID,
+                                 @RequestParam String noteText,
+                                 @RequestParam String relevance,
+                                 Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         Lawyer lawyer = lawyerDAO.getLawyerByEmail(userDetails.getUsername()).get(0); // Fetch lawyer details
 
@@ -56,7 +56,7 @@ public class CaseNotesController {
         Date currentDate = new Date(System.currentTimeMillis()); // Get current date
         caseNote.setDateCreated(currentDate); // Set creation date
         caseNote.setDateModified(currentDate); // Set modification date
-        
+
         caseNote.setCaseID(caseID);
         caseNote.setCatID(catID);
         caseNote.setLawyerID(lawyer.getLawyerID());
@@ -98,7 +98,10 @@ public class CaseNotesController {
         return "redirect:/caseNotes/list"; // Redirect after deletion
     }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> 373e9354fe26c33bbebf97387a080b62ba55e741
     // Handle updating an existing CaseNote
     @PostMapping("/update")
     public String updateCaseNote(@ModelAttribute CaseNotes caseNotes) {

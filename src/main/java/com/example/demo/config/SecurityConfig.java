@@ -178,7 +178,11 @@ public class SecurityConfig {
         http.csrf(c -> c.disable())
 
                 .authorizeHttpRequests(request -> request.requestMatchers("/", "/login", "/registration", "/css/**").permitAll()
+<<<<<<< HEAD
                         .requestMatchers("/dd").hasAuthority("ROLE_ADMIN")
+=======
+                        .requestMatchers("/clients").hasAuthority("ROLE_ADMIN")
+>>>>>>> 373e9354fe26c33bbebf97387a080b62ba55e741
                         .requestMatchers("/client-page").hasAuthority("ROLE_CLIENT")
                         .requestMatchers("/dashboard").hasAuthority("ROLE_LAWYER")
                         .requestMatchers("/register/paralegal", "/paralegals", "/paralegal-page").hasAuthority("ROLE_PARALEGAL")
