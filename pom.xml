@@ -26,22 +26,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-<<<<<<< HEAD
-		 <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-jdbc</artifactId>
-    </dependency>
-=======
 
 		<!-- JDBC Starter for Database -->
->>>>>>> 373e9354fe26c33bbebf97387a080b62ba55e741
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
-<<<<<<< HEAD
-		
-=======
 
 		<!-- Security Starter for Authentication -->
 		<dependency>
@@ -50,7 +40,6 @@
 		</dependency>
 
 		<!-- MySQL Connector -->
->>>>>>> 373e9354fe26c33bbebf97387a080b62ba55e741
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
@@ -62,13 +51,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-<<<<<<< HEAD
-	<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-=======
->>>>>>> 373e9354fe26c33bbebf97387a080b62ba55e741
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>

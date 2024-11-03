@@ -98,10 +98,6 @@ public class CaseNotesController {
         return "redirect:/caseNotes/list"; // Redirect after deletion
     }
 
-<<<<<<< HEAD
-    
-=======
->>>>>>> 373e9354fe26c33bbebf97387a080b62ba55e741
     // Handle updating an existing CaseNote
     @PostMapping("/update")
     public String updateCaseNote(@ModelAttribute CaseNotes caseNotes) {

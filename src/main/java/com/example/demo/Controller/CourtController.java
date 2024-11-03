@@ -4,10 +4,6 @@ import com.example.demo.dao.CaseCourtDAO;
 import com.example.demo.dao.CourtDAO;
 import com.example.demo.model.CaseCourt;
 import com.example.demo.model.Court;
-<<<<<<< HEAD
-
-=======
->>>>>>> 373e9354fe26c33bbebf97387a080b62ba55e741
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
