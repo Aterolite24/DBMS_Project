@@ -10,10 +10,9 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 
-
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-	
+
 	 @Autowired
 	 private UserRepository userRepository;
 
@@ -23,9 +22,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("user not found");
 		}
-		
+
 		return new CustomUserDetail(user);
 
 	}
-
 }
