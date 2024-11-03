@@ -1,54 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
-    <link rel="stylesheet" th:href="@{../css/styles.css}">
-</head>
-<body>
-    <div class="container">
-        <div class="message" th:if="${message != null}">
-           [[${message}]]
-        </div>
-        <h2>Registration Form</h2>
-        <form 
-            th:action="@{/registration}"
-            method="post"
-            role="form"
-            th:object="${user}"
-        >
-            <div class="form-group">
-                <label for="fullname">Fullname:</label>
-                <input th:field="*{fullname}" type="text" id="fullname" name="fullname" placeholder="Enter your fullname" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input th:field="*{email}" type="email" id="email" name="email" placeholder="Enter your email" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input th:field="*{password}" type="password" id="password" name="password" placeholder="Enter your password" required>
-            </div>
-
-            <div class="form-group">
-                <label for="role">Role:</label>
-                <select th:field="*{role}" id="role" name="role" required>
-                    <option value="" disabled selected>Select your role</option>
-                    <option value="ROLE_ADMIN">Admin</option>
-                    <option value="ROLE_CLIENT">Client</option>
-                    <option value="ROLE_LAWYER">Lawyer</option>
-                    <option value="ROLE_PARALEGAL">Paralegal</option>
-                </select>
-            </div>
-            
-            <input type="submit" value="Register">
-        </form>
-    </div>
-</body>
-</html> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,8 +6,8 @@
     <title>Registration Form</title>
     <link rel="stylesheet" th:href="@{../css/styles.css}">
 </head>
-<body>
-    <div class="container">
+<body style="background:white;">
+    <div class="container" style="padding-right: 45px;margin-top: 128px;    padding-left: 29px;">
 
     <div th:if="${error}" style="color: red;">
         <p th:text="${error}"></p>
@@ -67,7 +16,7 @@
             [[${message}]]
         </div>
 
-        <!-- Login Button appears if registration is successful -->
+        
        
         <h2>Registration Form</h2>
         <form 

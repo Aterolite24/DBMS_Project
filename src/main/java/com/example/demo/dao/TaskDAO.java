@@ -93,27 +93,28 @@ public class TaskDAO {
 
     public void assignLawyersToTask(int taskId, List<Integer> lawyerIds) {
         // Remove existing lawyer assignments
-        String deleteLawyersQuery = "DELETE FROM Taskassigned WHERE TaskID = ?";
+        String deleteLawyersQuery = "DELETE FROM Tasklawassigned WHERE TaskID = ?";
         jdbcTemplate.update(deleteLawyersQuery, taskId);
 
         // Insert new lawyer assignments
-        String insertLawyerQuery = "INSERT INTO Taskassigned(TaskID, EmployeeType,EmpID) VALUES (?, ?,?)";
+        String insertLawyerQuery = "INSERT INTO Tasklawassigned(TaskID,EmpID) VALUES (?,?)";
         for (Integer lawyerId : lawyerIds) {
-            jdbcTemplate.update(insertLawyerQuery, taskId, "Lawyer",lawyerId);
+            jdbcTemplate.update(insertLawyerQuery, taskId,lawyerId);
         }
     }
 
     // Assign multiple paralegals to a task
     public void assignParalegalsToTask(int taskId, List<Integer> paralegalIds) {
         // Remove existing paralegal assignments
-        String deleteParalegalsQuery = "DELETE FROM Taskassigned WHERE TaskID = ? AND EmployeeType = 'Paralegal'";
+        // String deleteParalegalsQuery = "DELETE FROM Taskassigned WHERE TaskID = ? AND EmployeeType = 'Paralegal'";
+        String deleteParalegalsQuery = "DELETE FROM Taskparassigned WHERE TaskID = ?";
 
         jdbcTemplate.update(deleteParalegalsQuery, taskId);
 
         // Insert new paralegal assignments
-        String insertParalegalQuery = "INSERT INTO Taskassigned (TaskID,EmployeeType, EmpID) VALUES (?, ?,?)";
+        String insertParalegalQuery = "INSERT INTO Taskparassigned (TaskID, EmpID) VALUES (?,?)";
         for (Integer paralegalId : paralegalIds) {
-            jdbcTemplate.update(insertParalegalQuery, taskId,"Paralegal", paralegalId);
+            jdbcTemplate.update(insertParalegalQuery, taskId, paralegalId);
         }
     }
 }

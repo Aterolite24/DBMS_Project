@@ -43,6 +43,23 @@ public class CategoryDAO {
         }
     }
 
+    public String getCategoryTypeById(Integer catID) {
+        String sql = "SELECT caseType FROM Category WHERE CatID = ?";
+        try {
+            // Query to get the caseType based on catID
+            return jdbcTemplate.queryForObject(sql, String.class, catID);
+        } catch (EmptyResultDataAccessException e) {
+            // Handle case where no result is found
+            System.out.println("No Category found with CatID: " + catID);
+            return null; // or throw a custom exception
+        } catch (DataAccessException e) {
+            // Handle any other data access exceptions
+            System.out.println("Error retrieving caseType for CatID: " + catID + " - " + e.getMessage());
+            return null; // or throw a custom exception
+        }
+    }
+    
+
     // Save a new category
     public void saveCategory(Category category) {
         String sql = "INSERT INTO Category (CatID, CaseType) VALUES (?, ?)";
@@ -56,10 +73,29 @@ public class CategoryDAO {
     }
 
     // Delete a category
+    // public void deleteCategory(Integer catID) {
+    //     String sql = "DELETE FROM Category WHERE CatID = ?";
+    //     jdbcTemplate.update(sql, catID);
+    // }
     public void deleteCategory(Integer catID) {
-        String sql = "DELETE FROM Category WHERE CatID = ?";
-        jdbcTemplate.update(sql, catID);
+        // Get the category type (or case type) using the catID
+        Category category = getCategoryById(catID);
+        if (category == null) {
+            System.out.println("Category with ID " + catID + " does not exist.");
+            return;
+        }
+    
+        // Define the SQL for deleting the category and dropping the table
+        String deleteCategorySql = "DELETE FROM Category WHERE CatID = ?";
+        String dropTableSql = "DROP TABLE IF EXISTS " + category.getCaseType() +"CASE";
+    
+        // Execute the delete and drop statements
+        jdbcTemplate.update(deleteCategorySql, catID);
+        jdbcTemplate.execute(dropTableSql);
+    
+        System.out.println("Deleted category with ID " + catID + " and dropped table: " + category.getCaseType());
     }
+    
 
     
     public int getCatIdByCaseType(String caseType) {

@@ -15,6 +15,7 @@
             <nav th:replace="navbar::navbar"></nav>
             <div class="container mt-5">
                 <h2>Matrimonial Cases</h2>
+                <div class="table-container">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -53,7 +54,7 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
                 
                 <a th:href="@{/matrimonialCase/register}" class="btn btn-primary">Add New Matrimonial Case</a>
             </div>

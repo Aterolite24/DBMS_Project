@@ -2,12 +2,9 @@ package com.example.demo.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +13,37 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.dao.CaseNotesDAO;
+import com.example.demo.dao.CategoryDAO;
+import com.example.demo.dao.CivilCaseDAO;
+import com.example.demo.dao.CorporateCaseDAO;
+import com.example.demo.dao.CriminalCaseDAO;
 import com.example.demo.dao.LawyerDAO; // Ensure you have a corresponding LawyerDAO
+import com.example.demo.dao.MatrimonialCaseDAO;
+import com.example.demo.model.CaseNoteWithDetails;
+import com.example.demo.model.CaseNotes;
+import com.example.demo.model.Category;
 import com.example.demo.model.Lawyer; // Ensure you have a corresponding Lawyer model
 
 @Controller
 public class LawyerController {
+
+    @Autowired
+    private CaseNotesDAO caseNoteDAO;
+
+    @Autowired
+    private CategoryDAO categoryDAO;
+
+    @Autowired
+    private CorporateCaseDAO cC;
+
+    @Autowired
+    private CivilCaseDAO cc;
+
+    @Autowired
+    private CriminalCaseDAO cr;
+    @Autowired
+    private MatrimonialCaseDAO ma;
 
     @Autowired
     private LawyerDAO lawyerDAO;
@@ -145,6 +168,45 @@ public class LawyerController {
         return "law_list"; // Return the view name for displaying the lawyer list
     }
 
+    @GetMapping("/caseNotes/viewAll")
+    public String viewAllCaseNotes(@RequestParam("lawyerId") int lawyerId, Model model) {
+        List<CaseNotes> caseNotes = caseNoteDAO.getAllCaseNotesForLawyer(lawyerId);
+        List<CaseNoteWithDetails> enrichedCaseNotes = new ArrayList<>();
+
+        for (CaseNotes caseNote : caseNotes) {
+            Category category = categoryDAO.getCategoryById(caseNote.getCatID());
+            String caseName = getCaseNameById(caseNote.getCaseID(), caseNote.getCatID()); // Implement this method
+    
+            CaseNoteWithDetails detailedCaseNote = new CaseNoteWithDetails(caseNote, category.getCaseType(), caseName);
+            enrichedCaseNotes.add(detailedCaseNote);
+        }
+    
+        model.addAttribute("caseNotes", enrichedCaseNotes);
+        return "casenotelaw";  // Make sure this matches your Thymeleaf template name
+    }
+
+    private String getCaseNameById(int caseID, int catID) {
+        String caseName = "";
+    
+        switch (catID) {
+            case 1: // Corporate
+                caseName = cC.getCorporateCaseById(caseID).getCaseDesc();
+                break;
+            case 2: // Matrimonial
+                caseName = ma.getMatrimonialCaseById(caseID).getCaseDesc();
+                break;
+            case 3: // Civil
+                caseName = cc.getCivilCaseById(caseID).getCaseDesc();
+                break;
+            case 4: // Criminal
+                caseName = cr.getCriminalCaseById(caseID).getCaseDesc();
+                break;
+            default:
+                caseName = "Unknown Case";
+        }
+    
+        return caseName;
+    }
 
     
 }

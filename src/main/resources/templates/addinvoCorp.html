@@ -1,66 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Invoice</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <style>
-        .required::after {
-            content: " *";
-            color: red;
-        }
-        .text-danger {
-            color: red;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="wrapper">
-        <aside th:replace="sidebar::sidebar"></aside>
-        <div style="display: flex; flex-direction: column; width: 100%;">
-            <nav th:replace="navbar::navbar"></nav>
-            <div class="container mt-5">
-                <h2>Add Invoice</h2>
-                <form th:action="@{/invoice/save}" method="post">
-                    <input type="hidden" name="corporateCaseID" th:value="${corporateCase.CorporateCaseID}" />
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="amount" class="required">Amount</label>
-                            <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="dueDate" class="required">Due Date</label>
-                            <input type="date" class="form-control" id="dueDate" name="dueDate" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="status">Status</label>
-                            <input type="text" class="form-control" id="status" name="status" placeholder="Enter invoice status">
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Save Invoice</button>
-                    <a href="/invoice/list" class="btn btn-secondary">Cancel</a>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html> -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -71,59 +8,132 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
     <style>
+        /* General styling */
+        body {
+            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        /* Styling form labels */
+        .form-group label {
+            font-weight: 600;
+            color: #555;
+        }
+
         .required::after {
             content: " *";
             color: red;
         }
+
         .text-danger {
             color: red;
+        }
+
+        /* Input fields styling */
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        /* Status input field */
+        #status {
+            background-color: #f8f9fa;
+        }
+
+        /* Styling buttons */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+            margin-right: 8px;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            box-shadow: 0 2px 4px rgba(108, 117, 125, 0.3);
+        }
+
+        /* Styling the button container */
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Centering form rows */
+        .form-row {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        /* Border styling for an invoice look */
+        .form-group {
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="wrapper">
-        <aside th:replace="sidebar::sidebar"></aside>
-        <div style="display: flex; flex-direction: column; width: 100%;">
-            <nav th:replace="navbar::navbar"></nav>
-            <div class="container mt-5">
-                <h2>Add Invoice</h2>
-                <form th:action="@{/invoice/save}" method="post">
-                    <input type="hidden" name="caseId" th:value="${caseId}"/> <!-- Make sure this matches -->
-    <input type="hidden" name="catId" th:value="${catId}"/>
+    <div class="container">
+        <h2>Add Invoice</h2>
+        <form th:action="@{/invoice/save}" method="post" style="width: 100%;">
+            <input type="hidden" name="caseId" th:value="${caseId}"/>
+            <input type="hidden" name="catId" th:value="${catId}"/>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="amount" class="required">Amount</label>
-                            <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="dueDate" class="required">Due Date</label>
-                            <input type="date" class="form-control" id="dueDate" name="dueDate" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="status">Status</label>
-                            <input type="text" class="form-control" id="status" name="status" placeholder="Enter invoice status">
-                        </div>
-                    </div>
-
-                
-                    
-                    <button type="submit" class="btn btn-primary">Save Invoice</button>
-                    <a th:href="@{/invoice/list}" class="btn btn-secondary">Cancel</a>
-                </form>
+            <div class="form-row justify-content-center">
+                <div class="form-group col-md-8">
+                    <label for="amount" class="required">Amount</label>
+                    <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount" required>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+            <div class="form-row justify-content-center">
+                <div class="form-group col-md-8">
+                    <label for="dueDate" class="required">Due Date</label>
+                    <input type="date" class="form-control" id="dueDate" name="dueDate" required>
+                </div>
+            </div>
+
+            <div class="form-row justify-content-center">
+                <div class="form-group col-md-8">
+                    <label for="status">Status</label>
+                    <input type="text" class="form-control" id="status" name="status" placeholder="Enter invoice status">
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Save Invoice</button>
+                <a th:href="@{/invoice/list}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+   

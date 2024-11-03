@@ -1,3 +1,75 @@
+<!-- <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Notes List</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <style>
+        .text-danger {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+      
+        <aside th:replace="sidebar::sidebar"></aside>
+
+      
+        <div style="display: flex; flex-direction: column; width: 100%;">
+            <nav th:replace="navbar::navbar"></nav>
+            
+            <div class="container mt-5">
+                <h2>Case Notes</h2>
+        
+                <div th:if="${error}" class="alert alert-danger">
+                    <span th:text="${error}"></span>
+                </div>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Case Note ID</th>
+                            <th>Note Text</th>
+                            <th>Relevance</th>
+                            <th>Date Created</th>
+                            <th>Date Modified</th>
+                            <th>Case Description</th>
+                            <th>Case Type</th>
+                            <th>Lawyer ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="caseNote : ${caseNotesList}">
+                            <td th:text="${caseNote.caseNoteID}"></td>
+                            <td th:text="${caseNote.noteText}"></td>
+                            <td th:text="${caseNote.relevance}"></td>
+                            <td th:text="${caseNote.dateCreated}"></td>
+                            <td th:text="${caseNote.dateModified}"></td>
+                            <td th:text="${caseNote.caseID}"></td> 
+                            <td th:text="${caseNote.catID}"></td>
+                            <td th:text="${caseNote.lawyerID}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+        
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html> -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -32,7 +104,12 @@
                     <span th:text="${error}"></span>
                 </div>
 
-                <table class="table table-striped">
+                <!-- No Case Notes Message -->
+                <div th:if="${#lists.isEmpty(caseNotesList)}" class="alert alert-info">
+                    No case notes available.
+                </div>
+
+                <table class="table table-striped" th:if="${!#lists.isEmpty(caseNotesList)}">
                     <thead>
                         <tr>
                             <th>Case Note ID</th>
@@ -40,7 +117,7 @@
                             <th>Relevance</th>
                             <th>Date Created</th>
                             <th>Date Modified</th>
-                            <th>Case Description</th>
+                            <th>Case Id</th>
                             <th>Case Type</th>
                             <th>Lawyer ID</th>
                         </tr>
@@ -59,7 +136,6 @@
                     </tbody>
                 </table>
                 
-        
             </div>
         </div>
     </div>

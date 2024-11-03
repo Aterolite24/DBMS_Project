@@ -62,6 +62,7 @@ public class CivilCaseController {
         // Fetch all civil cases via DAO
         List<CivilCase> civilCases = civilCaseDAO.listCivilCases();
         model.addAttribute("civilCases", civilCases);
+        model.addAttribute("x", 3);
         return "civilCaseList"; // Thymeleaf template name for Civil Case list
     }
 }

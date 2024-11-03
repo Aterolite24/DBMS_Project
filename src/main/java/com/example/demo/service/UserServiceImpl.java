@@ -1,6 +1,48 @@
+// package com.example.demo.service;
+
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.jdbc.core.JdbcTemplate;
+// import org.springframework.security.core.userdetails.UserDetails;
+// import org.springframework.security.crypto.password.PasswordEncoder;
+// import org.springframework.stereotype.Service;
+
+// import com.example.demo.dto.UserDto;
+// import com.example.demo.model.User;
+// import com.example.demo.repository.UserRepository;
+
+
+// @Service
+// public class UserServiceImpl implements UserService {
+	
+// 	@Autowired
+//     JdbcTemplate jdbcTemplate;
+// 	@Autowired
+// 	private PasswordEncoder passwordEncoder;
+	
+// 	@Autowired
+// 	private UserRepository userRepository;
+
+// 	@Override
+// 	public User save(UserDto userDto) {
+// 		User user = new User(userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()) , userDto.getRole(), userDto.getFullname());
+// 		return userRepository.save(user);
+// 	}
+
+//     @Override
+//     public UserDetails loadUserByUsername(String name) {
+//         throw new UnsupportedOperationException("Unimplemented method 'loadUserByUsername'");
+//     }
+
+// 	@Override
+//     public boolean emailExists(String email) {
+//         return userRepository.findByEmail(email) != null; // Ensure findByEmail method exists in the repository
+//     }
+
+// }
 package com.example.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -74,6 +116,38 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return count != null && count > 0;
 	}
 
+<<<<<<< HEAD
+	// public User findByEmail(String email) {
+	// 	String sql = "SELECT * FROM users WHERE email = ?";
+	// 	return jdbcTemplate.queryForObject(sql, new Object[]{email}, (rs, rowNum) ->
+	// 			new User(
+	// 					rs.getString("email"),
+	// 					rs.getString("password"),
+	// 					rs.getString("role"),
+	// 					rs.getString("fullname")
+	// 			)
+	// 	);
+	// }
+	public User findByEmail(String email) {
+		String sql = "SELECT * FROM users WHERE email = ?";
+		try {
+			List<User> users = jdbcTemplate.query(sql, new Object[]{email}, (rs, rowNum) ->
+					new User(
+							rs.getString("email"),
+							rs.getString("password"),
+							rs.getString("role"),
+							rs.getString("fullname")
+					)
+			);
+			return users.isEmpty() ? null : users.get(0);
+		} catch (DataAccessException e) {
+			e.printStackTrace(); // Log the exception or handle it appropriately
+			return null; // Or throw a custom exception
+		}
+	}
+	
+	
+=======
 	public User findByEmail(String email) {
 		String sql = "SELECT * FROM users WHERE email = ?";
 		return jdbcTemplate.queryForObject(sql, new Object[]{email}, (rs, rowNum) ->
@@ -85,4 +159,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 				)
 		);
 	}
+>>>>>>> 373e9354fe26c33bbebf97387a080b62ba55e741
 }

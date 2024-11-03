@@ -41,14 +41,15 @@
                         </thead>
                         <tbody>
                         <tr th:each="lawyer : ${lawyers}">
-                            <td th:text="${lawyer.lawyerID}"></td>
-                            <td th:text="${lawyer.fName}"></td>
-                            <td th:text="${lawyer.mName}"></td>
-                            <td th:text="${lawyer.lName}"></td>
-                            <td th:text="${lawyer.qualification}"></td>
-                            <td th:text="${lawyer.experience}"></td>
-                            <td th:text="${lawyer.expertise}"></td>
-                            <td th:text="${lawyer.positions}"></td>
+                            <td th:text="${lawyer.lawyerID != null ? lawyer.lawyerID : '-'}"></td>
+                            <td th:text="${lawyer.fName != null && lawyer.fName != '' ? lawyer.fName : '-'}"></td>
+                            <td th:text="${lawyer.mName != null && lawyer.mName != '' ? lawyer.mName : '-'}"></td>
+                            <td th:text="${lawyer.lName != null && lawyer.lName != '' ? lawyer.lName : '-'}"></td>
+                            <td th:text="${lawyer.qualification != null && lawyer.qualification != '' ? lawyer.qualification : '-'}"></td>
+                            <td th:text="${lawyer.experience != null && lawyer.experience != '' ? lawyer.experience : '-'}"></td>
+                            <td th:text="${lawyer.expertise != null && lawyer.expertise != '' ? lawyer.expertise : '-'}"></td>
+                            <td th:text="${lawyer.positions != null && lawyer.positions != '' ? lawyer.positions : '-'}"></td>
+
                             <td>
                                 <a th:href="@{/lawyers/edit/{id}(id=${lawyer.lawyerID})}" class="btn btn-warning btn-sm">Edit</a>
                                 <form th:action="@{/lawyers/delete/{id}(id=${lawyer.lawyerID})}" method="post" style="display:inline;">

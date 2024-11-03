@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Choose Case Category</title>
+    <title>Select Category</title>
 </head>
 <body>
-<h1>Select Case Category</h1>
-
-<form  th:action="@{/selCategory}" method="post">
-
-    <!-- Dropdown for selecting case type -->
+<h1>Select a Category</h1>
+<form action="#" th:action="@{/appointment/selectCategory}" method="post">
+    
     <label for="caseTypeSelect">Select a Category:</label>
     <select id="caseTypeSelect" name="caseType" required>
         <option value="" disabled selected>Select a category</option>
@@ -17,9 +15,7 @@
         <option value="3">Civil Case</option>
         <option value="4">Criminal Case</option>
     </select>
-
     <button type="submit">Submit</button>
 </form>
-
 </body>
 </html>

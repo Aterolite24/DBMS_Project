@@ -1,27 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Choose Case Category</title>
+    <title>Select Category</title>
 </head>
 <body>
-<h1>Select Case Category</h1>
-
-<form  th:action="@{witnessEvi/selCategory}" method="post">
-    <!-- Hidden input to pass the witness ID -->
+<h1>Select a Category</h1>
+<form action="#" th:action="@{/witnessEvi/selCategory}" method="post">
+    <!-- Hidden input for eviID -->
     <input type="hidden" name="eviID" th:value="${eviID}" />
 
-    <!-- Dropdown for selecting case type -->
-    <label for="caseTypeSelect">Select a Category:</label>
-    <select id="caseTypeSelect" name="caseType" required>
+    <label for="caseType">Select Case Type:</label>
+    <select name="caseType" required>
         <option value="" disabled selected>Select a category</option>
-        <option value="1">Corporate Case</option>
-        <option value="2">Matrimonial Case</option>
-        <option value="3">Civil Case</option>
-        <option value="4">Criminal Case</option>
+        <option th:each="category : ${categories}" th:value="${category.caseType}" th:text="${category.caseType}"></option>
     </select>
-
     <button type="submit">Submit</button>
 </form>
-
 </body>
 </html>
