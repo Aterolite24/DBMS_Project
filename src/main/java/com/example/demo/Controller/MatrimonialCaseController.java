@@ -62,6 +62,7 @@ public class MatrimonialCaseController {
         // Fetch all matrimonial cases via DAO
         List<MatrimonialCase> matrimonialCases = matrimonialCaseDAO.listMatrimonialCases();
         model.addAttribute("matrimonialCases", matrimonialCases);
+        model.addAttribute("x", 2);
         return "matrimonialCaseList"; // Thymeleaf template name for Matrimonial Case list
     }
 }

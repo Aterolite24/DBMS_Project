@@ -15,6 +15,7 @@
             <nav th:replace="navbar::navbar"></nav>
             <div class="container mt-5">
                 <h2>Civil Cases</h2>
+                <div class="table-container">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -51,7 +52,7 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
                 
                 <a th:href="@{/civilCase/register}" class="btn btn-primary">Add New Civil Case</a>
             </div>

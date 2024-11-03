@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Notes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .case-note {
+            border: 10px solid brown;
+            background-color: #4e524b;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            line-height: 0.2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div style="text-align:center;width:100%;">
+        <h1>All Case Notes</h1></div>
+        <div th:if="${caseNotes.isEmpty()}" class="alert alert-warning" role="alert">
+            No case notes found.
+        </div>
+
+        <div th:each="detailedCaseNote : ${caseNotes}">
+            <div class="case-note">
+                <h5 th:text="'Note ID: ' + ${detailedCaseNote.caseNote.caseNoteID}"></h5>
+                <p><strong>Note Text:</strong> <span th:text="${detailedCaseNote.caseNote.noteText}"></span></p>
+                <p><strong>Category:</strong> <span th:text="${detailedCaseNote.categoryName}"></span></p>
+                <p><strong>Case Name:</strong> <span th:text="${detailedCaseNote.caseName}"></span></p>
+                <p><strong>Date Created:</strong> <span th:text="${#dates.format(detailedCaseNote.caseNote.dateCreated, 'dd/MM/yyyy')}"></span></p>
+                <p><strong>Date Modified:</strong> <span th:text="${#dates.format(detailedCaseNote.caseNote.dateModified, 'dd/MM/yyyy')}"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

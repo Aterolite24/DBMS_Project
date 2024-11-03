@@ -46,26 +46,49 @@ public class CaseNotesDAO {
         return caseNotesList;
     }
 
+    // public List<CaseNotes> getAllCaseNotesForLawyer(int lawyerId) {
+    //     String sql = "SELECT cn.CaseNoteID, cn.NoteText, cn.Relevance, cn.DateCreated, cn.DateModified, " +
+    //                  "CASE " +
+    //                  "    WHEN t.CatID = 1 THEN c.CorporateCaseID " +
+    //                  "    WHEN t.CatID = 2 THEN m.MatrimonialCaseID " +
+    //                  "    WHEN t.CatID = 3 THEN ci.CivilCaseID " +
+    //                  "    WHEN t.CatID = 4 THEN cr.CriminalCaseID " +
+    //                  "END AS CaseID, " +
+    //                  "COALESCE(c.CaseDesc, m.CaseDesc, ci.CaseDesc, cr.CaseDesc) AS CaseDesc, " +
+    //                  "ct.CaseType, l.LawyerID ,l.fName" +
+    //                  "FROM CaseNotes cn " +
+    //                  "JOIN Task t ON cn.CaseID = t.CaseID AND cn.CatID = t.CatID " +
+    //                  "LEFT JOIN CorporateCase c ON t.CaseID = c.CorporateCaseID AND t.CatID = 1 " +
+    //                  "LEFT JOIN MatrimonialCase m ON t.CaseID = m.MatrimonialCaseID AND t.CatID = 2 " +
+    //                  "LEFT JOIN CivilCase ci ON t.CaseID = ci.CivilCaseID AND t.CatID = 3 " +
+    //                  "LEFT JOIN CriminalCase cr ON t.CaseID = cr.CriminalCaseID AND t.CatID = 4 " +
+    //                  "JOIN Category ct ON t.CatID = ct.CatID " +
+    //                  "JOIN Lawyer l ON cn.LawyerID = l.LawyerID " +
+    //                  "WHERE cn.LawyerID = ?";
+        
+    //     List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, lawyerId);
+    
+    //     List<CaseNotes> caseNotesList = new ArrayList<>();
+    //     for (Map<String, Object> row : rows) {
+    //         CaseNotes caseNote = new CaseNotes();
+    //         caseNote.setCaseNoteID((Integer) row.get("CaseNoteID"));
+    //         caseNote.setNoteText((String) row.get("NoteText"));
+    //         caseNote.setRelevance((String) row.get("Relevance"));
+    //         caseNote.setDateCreated((Date) row.get("DateCreated"));
+    //         caseNote.setDateModified((Date) row.get("DateModified"));
+    //         caseNote.setCaseID((Integer) row.get("CaseID")); // Retrieved from the CASE statement
+    //         caseNote.setLawyerID((Integer) row.get("LawyerID"));
+    //         caseNotesList.add(caseNote);
+    //     }
+    //     return caseNotesList;
+    // }
     public List<CaseNotes> getAllCaseNotesForLawyer(int lawyerId) {
         String sql = "SELECT cn.CaseNoteID, cn.NoteText, cn.Relevance, cn.DateCreated, cn.DateModified, " +
-                     "CASE " +
-                     "    WHEN t.CatID = 1 THEN c.CorporateCaseID " +
-                     "    WHEN t.CatID = 2 THEN m.MatrimonialCaseID " +
-                     "    WHEN t.CatID = 3 THEN ci.CivilCaseID " +
-                     "    WHEN t.CatID = 4 THEN cr.CriminalCaseID " +
-                     "END AS CaseID, " +
-                     "COALESCE(c.CaseDesc, m.CaseDesc, ci.CaseDesc, cr.CaseDesc) AS CaseDesc, " +
-                     "ct.CaseType, l.LawyerID ,l.fName" +
+                     "cn.CaseID, cn.CatID, cn.LawyerID " +
                      "FROM CaseNotes cn " +
-                     "JOIN Task t ON cn.CaseID = t.CaseID AND cn.CatID = t.CatID " +
-                     "LEFT JOIN CorporateCase c ON t.CaseID = c.CorporateCaseID AND t.CatID = 1 " +
-                     "LEFT JOIN MatrimonialCase m ON t.CaseID = m.MatrimonialCaseID AND t.CatID = 2 " +
-                     "LEFT JOIN CivilCase ci ON t.CaseID = ci.CivilCaseID AND t.CatID = 3 " +
-                     "LEFT JOIN CriminalCase cr ON t.CaseID = cr.CriminalCaseID AND t.CatID = 4 " +
-                     "JOIN Category ct ON t.CatID = ct.CatID " +
-                     "JOIN Lawyer l ON cn.LawyerID = l.LawyerID " +
                      "WHERE cn.LawyerID = ?";
-        
+    
+        // Query the database for case notes belonging to the lawyer
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, lawyerId);
     
         List<CaseNotes> caseNotesList = new ArrayList<>();
@@ -76,12 +99,14 @@ public class CaseNotesDAO {
             caseNote.setRelevance((String) row.get("Relevance"));
             caseNote.setDateCreated((Date) row.get("DateCreated"));
             caseNote.setDateModified((Date) row.get("DateModified"));
-            caseNote.setCaseID((Integer) row.get("CaseID")); // Retrieved from the CASE statement
-            caseNote.setLawyerID((Integer) row.get("LawyerID"));
+            caseNote.setCaseID((Integer) row.get("CaseID")); // Directly from CaseNotes
+            caseNote.setCatID((Integer) row.get("CatID"));   // Category ID from CaseNotes
+            caseNote.setLawyerID((Integer) row.get("LawyerID")); // Lawyer ID from CaseNotes
             caseNotesList.add(caseNote);
         }
         return caseNotesList;
     }
+    
     
     public void saveCaseNote(CaseNotes caseNote) {
         String sql = "INSERT INTO CaseNotes (NoteText, Relevance, DateCreated, DateModified, CaseID, CatID, LawyerID) " +

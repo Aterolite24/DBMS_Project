@@ -1,5 +1,5 @@
 create database project_db;
-
+drop database project_db;
 use project_db;
 
 -- done
@@ -21,7 +21,7 @@ CREATE TABLE LawyerPhone (
     LawyerID INT,
     PhoneNumber VARCHAR(20),
     PRIMARY KEY (LawyerID, PhoneNumber),  -- Corrected to use LawyerID instead of LawyerNo
-    FOREIGN KEY (LawyerID) REFERENCES Lawyer(LawyerID)
+    FOREIGN KEY (LawyerID) REFERENCES Lawyer(LawyerID) on delete cascade
 );
 
 -- done
@@ -29,7 +29,7 @@ CREATE TABLE LawyerEmail (
     LawyerID INT,
     EmailAddress VARCHAR(100),
     PRIMARY KEY (LawyerID, EmailAddress),  -- Corrected to use LawyerID instead of LawyerNo
-    FOREIGN KEY (LawyerID) REFERENCES Lawyer(LawyerID)
+    FOREIGN KEY (LawyerID) REFERENCES Lawyer(LawyerID) on delete cascade
 );
 
 -- done
@@ -51,7 +51,7 @@ CREATE TABLE ParalegalPhone (
     ParalegalID INT,
     PhoneNumber VARCHAR(20),
     PRIMARY KEY (ParalegalID, PhoneNumber),  -- Corrected to use ParalegalID instead of ParalegalNo
-    FOREIGN KEY (ParalegalID) REFERENCES Paralegal(ParalegalID)
+    FOREIGN KEY (ParalegalID) REFERENCES Paralegal(ParalegalID) on delete cascade
 );
 
 -- done
@@ -59,7 +59,7 @@ CREATE TABLE ParalegalEmail (
     ParalegalID INT,
     EmailAddress VARCHAR(100),
     PRIMARY KEY (ParalegalID, EmailAddress),  -- Corrected to use ParalegalID instead of ParalegalNo
-    FOREIGN KEY (ParalegalID) REFERENCES Paralegal(ParalegalID)
+    FOREIGN KEY (ParalegalID) REFERENCES Paralegal(ParalegalID) on delete cascade
 );
 
 -- done
@@ -114,10 +114,10 @@ CREATE TABLE CorporateCase (
  CREATE TABLE CriminalCase (
     CriminalCaseID INT PRIMARY KEY auto_increment,
     CaseDesc TEXT,
-    StartDate DATE,
-    ArrestDate DATE,
+    StartDate VARCHAR(20),
+    ArrestDate VARCHAR(20),
     Appeal VARCHAR(50),
-    EndDate DATE,
+    EndDate VARCHAR(20),
     ClientID INT NOT NULL,
     FOREIGN KEY (ClientID) REFERENCES Client(ClientID)
 );
@@ -126,8 +126,8 @@ CREATE TABLE CorporateCase (
 CREATE TABLE CivilCase (
     CivilCaseID INT PRIMARY KEY auto_increment,
     CaseDesc TEXT,
-    StartDate DATE,
-    EndDate DATE,
+    StartDate VARCHAR(20),
+    EndDate VARCHAR(20),
     Appeal VARCHAR(50),
     ClientID INT NOT NULL,
     Compensation INT,
@@ -141,17 +141,19 @@ CREATE TABLE CivilCase (
 CREATE TABLE MatrimonialCase (
     MatrimonialCaseID INT PRIMARY KEY auto_increment,
     CaseDesc TEXT,
-    StartDate DATE,
-    EndDate DATE,
+    StartDate VARCHAR(20),
+    EndDate VARCHAR(20),
     ClientID INT NOT NULL,
     MarriedStatus VARCHAR(50),
     DisputeType VARCHAR(50),
     AlimonyStatus VARCHAR(50),
     Children INT,
     CustodyDetail TEXT,
-    MarriageDate DATE,
+    MarriageDate VARCHAR(50),
     FOREIGN KEY (ClientID) REFERENCES Client(ClientID)
 );
+
+-- drop table criminalcase;
 
 -- done
 CREATE TABLE Appointment (
@@ -182,13 +184,29 @@ CREATE TABLE Task (
 );
 
 -- done
-CREATE TABLE Taskassigned (
+-- CREATE TABLE Taskassigned (
+--     TaskID INT not null,
+--     EmployeeType VARCHAR(50),
+--     EmpID INT,
+--     PRIMARY KEY (TaskID,EmployeeType,EmpID),
+--     FOREIGN KEY (TaskID) REFERENCES Task(TaskID) ON DELETE CASCADE
+-- );
+
+CREATE TABLE Tasklawassigned (
     TaskID INT not null,
-    EmployeeType VARCHAR(50),
     EmpID INT,
-    PRIMARY KEY (TaskID,EmployeeType,EmpID),
+    PRIMARY KEY (TaskID,EmpID),
     FOREIGN KEY (TaskID) REFERENCES Task(TaskID) ON DELETE CASCADE
 );
+
+CREATE TABLE Taskparassigned(
+	TaskID INT not null,
+    EmpID INT,
+    PRIMARY KEY (TaskID,EmpID),
+    FOREIGN KEY (TaskID) REFERENCES Task(TaskID) ON DELETE CASCADE
+);
+
+-- drop table taskassigned;
 
 
 -- done
@@ -200,7 +218,7 @@ CREATE TABLE Invoice (
     Amount DECIMAL(10, 2) NOT NULL,
     DueDate DATE,
     Status VARCHAR(50),
-    FOREIGN KEY (CatID) REFERENCES Category(CatID)
+    FOREIGN KEY (CatID) REFERENCES Category(CatID) on delete cascade
 );
 
 CREATE TABLE CaseNotes (
@@ -213,8 +231,8 @@ CREATE TABLE CaseNotes (
     CatID INT NOT NULL,
     LawyerID INT NOT NULL,
     PRIMARY KEY (CaseNoteID, CaseID,CatID),
-    FOREIGN KEY (LawyerID) REFERENCES Lawyer(LawyerID),
-    foreign key (CatID) REFERENCES Category(CatID)
+    FOREIGN KEY (LawyerID) REFERENCES Lawyer(LawyerID) on delete cascade,
+    foreign key (CatID) REFERENCES Category(CatID)  on delete cascade
 );
 -- drop table casenotes; 
 
@@ -234,8 +252,8 @@ CREATE TABLE CaseWit(
 	 CaseID INT NOT NULL,
     CatID INT NOT NULL,
     PRIMARY KEY (EviID,CaseID,CatID),
-     foreign key (CatID) REFERENCES Category(CatID),
-     FOREIGN KEY (EviID) references WitAndEvi(EviID)
+     foreign key (CatID) REFERENCES Category(CatID) on delete cascade,
+     FOREIGN KEY (EviID) references WitAndEvi(EviID) on delete cascade
 );
 
 -- done
@@ -256,6 +274,6 @@ CourtID INT NOT NULL,
 CaseID INT NOT NULL,
 CatID INT NOT NULL,
 PRIMARY KEY(CourtID,CaseID,CatID),
-foreign key (CatID) REFERENCES Category(CatID),
-foreign key (CourtID) references Court(CourtID)
+foreign key (CatID) REFERENCES Category(CatID) on delete cascade,
+foreign key (CourtID) references Court(CourtID) on delete cascade
 );

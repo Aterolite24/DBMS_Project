@@ -3,7 +3,6 @@ package com.example.demo.Controller;
 import com.example.demo.model.Appointment;
 import com.example.demo.model.Category; // Assuming Category model is created
 import com.example.demo.model.Client;
-import com.example.demo.model.CorporateCase;
 import com.example.demo.model.Lawyer;
 import com.example.demo.dao.AppointmentDAO;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -109,69 +108,19 @@ public class AppointmentController {
     }
 
 
-    // Show form to add a new appointment
-    // @GetMapping("/add")
-    // public String showAddAppointmentForm(Model model) {
-    //     // Fetch all clients, lawyers, and categories to populate dropdowns
-    //     List<Client> clients = clientDAO.listClients();
-    //     List<Lawyer> lawyers = lawyerDAO.listLawyers();
-    //     List<Category> categories = categoryDAO.listCategories(); // Method to get categories
-
-    //     model.addAttribute("clients", clients);
-    //     model.addAttribute("lawyers", lawyers);
-    //     model.addAttribute("categories", categories);
-        
-    //     model.addAttribute("appointment", new Appointment());
-    //     return "appointform"; // Thymeleaf template for adding appointment
-    // }
-
     @PostMapping("/save")
     public String saveAppointment(@ModelAttribute("appointment") Appointment appointment, Model model) {
         Integer clientId = null;
 
-        switch (appointment.getCatID()) {
-            case 1: // Corporate Case
-                String corporateQuery = "SELECT c.ClientID FROM Client c JOIN CorporateCase cc ON c.ClientID = cc.ClientID WHERE cc.CorporateCaseID = ?";
+        int caseId = appointment.getCatID();
+        String type = categoryDAO.getCategoryTypeById(caseId);
+        String Query = "SELECT c.ClientID FROM Client c JOIN " + type+"Case cc ON c.ClientID = cc.ClientID WHERE cc."+type+"CaseID = ?";
                 try {
-                    clientId = jdbcTemplate.queryForObject(corporateQuery, Integer.class, appointment.getCaseID());
+                    clientId = jdbcTemplate.queryForObject(Query, Integer.class, appointment.getCaseID());
                 } catch (EmptyResultDataAccessException e) {
                     // Log and handle the case when no result is found
-                    System.out.println("No client found for CorporateCaseID: " + appointment.getCaseID());
-                }
-                break;
-
-            case 3: // Civil Case
-                String civilQuery = "SELECT c.ClientID FROM Client c JOIN CivilCase cc ON c.ClientID = cc.ClientID WHERE cc.CivilCaseID = ?";
-                try {
-                    clientId = jdbcTemplate.queryForObject(civilQuery, Integer.class, appointment.getCaseID());
-                } catch (EmptyResultDataAccessException e) {
-                    System.out.println("No client found for CivilCaseID: " + appointment.getCaseID());
-                }
-                break;
-
-            case 2: // Matrimonial Case
-                String matrimonialQuery = "SELECT c.ClientID FROM Client c JOIN MatrimonialCase mc ON c.ClientID = mc.ClientID WHERE mc.MatrimonialCaseID = ?";
-                try {
-                    clientId = jdbcTemplate.queryForObject(matrimonialQuery, Integer.class, appointment.getCaseID());
-                } catch (EmptyResultDataAccessException e) {
-                    System.out.println("No client found for MatrimonialCaseID: " + appointment.getCaseID());
-                }
-                break;
-
-            case 4: // Criminal Case
-                String criminalQuery = "SELECT c.ClientID FROM Client c JOIN CriminalCase cc ON c.ClientID = cc.ClientID WHERE cc.CriminalCaseID = ?";
-                try {
-                    clientId = jdbcTemplate.queryForObject(criminalQuery, Integer.class, appointment.getCaseID());
-                } catch (EmptyResultDataAccessException e) {
-                    System.out.println("No client found for CriminalCaseID: " + appointment.getCaseID());
-                }
-                break;
-
-            default:
-                // Handle invalid catID
-                System.out.println("Invalid CatID: " + appointment.getCatID());
-                break;
-        }
+                    System.out.println("No client found for "+type+"CaseID: " + appointment.getCaseID());
+                }       
 
         // Check if clientId is found
         if (clientId != null) {

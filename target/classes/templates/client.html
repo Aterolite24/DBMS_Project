@@ -1,40 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Case Management</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 100px;
-        }
-        .button {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 20px;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-        .button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Page</title>
 </head>
 <body>
-
-    <h1>Case Management</h1>
-
-    <!-- Button to add a new case -->
-    <a th:href="@{/addNewCase}" class="button">Add New Case</a>
-
-    <!-- Button to view current cases -->
-    <a th:href="@{/viewCurrentCases}" class="button">View Current Cases</a>
-
+    <h1>Welcome, Client!</h1>
+    <p>Here you can manage your account and view your details.</p>
+    <a href="/logout">Logout</a>
 </body>
 </html>

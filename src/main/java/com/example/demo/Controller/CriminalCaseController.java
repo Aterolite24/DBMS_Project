@@ -62,6 +62,7 @@ public class CriminalCaseController {
         // Fetch all criminal cases via DAO
         List<CriminalCase> criminalCases = criminalCaseDAO.listCriminalCases();
         model.addAttribute("criminalCases", criminalCases);
+        model.addAttribute("x", 4);
         return "criminalCaseList"; // Thymeleaf template name for Criminal Case list
     }
 }

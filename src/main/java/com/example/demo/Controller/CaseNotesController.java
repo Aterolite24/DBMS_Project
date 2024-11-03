@@ -6,6 +6,7 @@ import com.example.demo.model.CaseNotes;
 import com.example.demo.model.Lawyer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ public class CaseNotesController {
     private CaseNotesDAO caseNotesDAO;
 
     @Autowired
+    @Qualifier("customUserDetailsService") // Specify the bean to use
     private UserDetailsService userDetailsService;
 
     @Autowired
@@ -87,21 +89,6 @@ public class CaseNotesController {
         return "casenotelist"; // Thymeleaf template name for listing CaseNotes
     }
 
-    // Show details for a single CaseNote
-    // @GetMapping("/view/{caseNoteID}/{caseID}/{catID}")
-    // public String viewCaseNote(@PathVariable("caseNoteID") Integer caseNoteID,
-    //                            @PathVariable("caseID") Integer caseID,
-    //                            @PathVariable("catID") Integer catID,
-    //                            Model model) {
-    //     CaseNotes caseNote = caseNotesDAO.getCaseNoteById(caseNoteID, caseID, catID);
-    //     if (caseNote != null) {
-    //         model.addAttribute("caseNote", caseNote);
-    //         return "viewCaseNote"; // Thymeleaf template name for viewing a CaseNote
-    //     } else {
-    //         return "redirect:/caseNotes/list"; // Redirect if not found
-    //     }
-    // }
-
     // Delete a CaseNote
     @GetMapping("/delete/{caseNoteID}/{caseID}/{catID}")
     public String deleteCaseNote(@PathVariable("caseNoteID") Integer caseNoteID,
@@ -111,21 +98,7 @@ public class CaseNotesController {
         return "redirect:/caseNotes/list"; // Redirect after deletion
     }
 
-    // Show form for editing a CaseNote
-    // @GetMapping("/edit/{caseNoteID}/{caseID}/{catID}")
-    // public String showEditCaseNoteForm(@PathVariable("caseNoteID") Integer caseNoteID,
-    //                                    @PathVariable("caseID") Integer caseID,
-    //                                    @PathVariable("catID") Integer catID,
-    //                                    Model model) {
-    //     CaseNotes caseNote = caseNotesDAO.getCaseNoteById(caseNoteID, caseID, catID);
-    //     if (caseNote != null) {
-    //         model.addAttribute("caseNote", caseNote);
-    //         return "editCaseNote"; // Thymeleaf template name for editing a CaseNote
-    //     } else {
-    //         return "redirect:/caseNotes/list"; // Redirect if not found
-    //     }
-    // }
-
+    
     // Handle updating an existing CaseNote
     @PostMapping("/update")
     public String updateCaseNote(@ModelAttribute CaseNotes caseNotes) {

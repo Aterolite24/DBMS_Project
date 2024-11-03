@@ -2,35 +2,122 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add Appointment</title>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Background and container styling */
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Form container styling */
+        .form-container {
+            background-color: #ffffff;
+            padding: 2em;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            animation: floatUp 0.6s ease-out;
+        }
+
+        /* Form elements styling */
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            color: #666;
+            font-weight: bold;
+        }
+
+        select, input[type="text"], input[type="date"], input[type="time"] {
+            width: 100%;
+            padding: 0.75em;
+            margin-bottom: 1em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        select:focus, input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 0.75em;
+            font-size: 1em;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #357ab8;
+        }
+
+        /* Floating effect animation */
+        @keyframes floatUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Add Appointment</h1>
-    <form action="#" th:action="@{/appointment/save}" th:object="${appointment}" method="post">
+    <div class="form-container">
+        <h1>Add Appointment</h1>
+        <form action="#" th:action="@{/appointment/save}" th:object="${appointment}" method="post">
+            
+            <label for="lawyer">Lawyer:</label>
+            <select th:field="*{lawyerID}" required>
+                <option th:each="lawyer : ${lawyers}" th:value="${lawyer.lawyerID}" th:text="${lawyer.fName}"></option>
+            </select>
+
+            <label for="caseID">CaseID:</label>
+            <select th:field="*{caseID}" required>
+                <option th:each="caseId : ${caseIds}" th:value="${caseId}" th:text="${caseId}"></option>
+            </select>
+
+            <!-- Hidden input for catID -->
+            <input type="hidden" th:field="*{catID}" />
         
-        <label for="lawyer">Lawyer:</label>
-        <select th:field="*{lawyerID}" required>
-            <option th:each="lawyer : ${lawyers}" th:value="${lawyer.lawyerID}" th:text="${lawyer.fName}"></option>
-        </select>
+            <label for="appointmentDate">Date:</label>
+            <input type="date" th:field="*{appointmentDate}" required/>
 
-        <label for="lawyer">CaseID:</label>
-        <select th:field="*{caseID}" required>
-            <option th:each="caseId : ${caseIds}" th:value="${caseId}" th:text="${caseId}"></option>
-        </select>
+            <label for="appointmentTime">Time:</label>
+            <input type="time" th:field="*{appointmentTime}" required/>
 
-        <!-- Hidden input for catID -->
-        <input type="hidden" th:field="*{catID}" />
-    
+            <label for="location">Location:</label>
+            <input type="text" th:field="*{location}" required/>
 
-        <label for="appointmentDate">Date:</label>
-        <input type="date" th:field="*{appointmentDate}" required/>
-
-        <label for="appointmentTime">Time:</label>
-        <input type="time" th:field="*{appointmentTime}" required/>
-
-        <label for="location">Location:</label>
-        <input type="text" th:field="*{location}" required/>
-
-        <button type="submit">Save Appointment</button>
-    </form>
+            <button type="submit">Save Appointment</button>
+        </form>
+    </div>
 </body>
 </html>
+
